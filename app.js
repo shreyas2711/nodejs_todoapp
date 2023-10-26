@@ -35,7 +35,7 @@ app.use("/api/v1/task",taskRouter);
 
 
 app.get("/",(req,res)=>{
-    res.send("hello")
+    res.send("Nice working")
 })
 
 app.get("/userid",async(req,res)=>{
