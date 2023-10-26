@@ -6,6 +6,6 @@ export const connectDB = ()=>{
     
     dbName:"backendapi",
 })
-.then(()=>console.log("Connected Successfully"))
+.then((c)=>console.log(`Connected Successfully ${c.connection.host}`))
 .catch((e)=>console.log(e))
 };
