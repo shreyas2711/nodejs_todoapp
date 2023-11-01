@@ -38,14 +38,6 @@ app.get("/",(req,res)=>{
     res.send("Nice working")
 })
 
-// app.get("/userid",async(req,res)=>{
 
-//     const {id} = req.body;
-//    const user = await User.findById(id)
-    
-//     res.json({
-//         success:true,
-//         user,
-//     })
 
 
