@@ -1,43 +1,35 @@
-import express from 'express';
-import userRouter from './routes/user.js'
-import taskRouter from './routes/task.js'
-import cors from "cors"
+import express from "express";
+import userRouter from "./routes/user.js";
+import taskRouter from "./routes/task.js";
+import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.js";
+import cors from "cors";
 
-
-
-import {config} from "dotenv";
-import cookieParser from 'cookie-parser';
-
-export const app=express();
-
+export const app = express();
 
 config({
-    path:"./data/config.env",
+  path: "./data/config.env",
 });
 
-const router=express.Router();
-
-
 // Using Middlewares
-
-const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5173';
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: frontendURL,
-    credentials: true, // Enable passing cookies and other credentials
-  }));
+app.use(
+  cors({
+    origin: [process.env.FRONTEND_URL],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
-// Using Routes
-app.use("/api/v1/users",userRouter);
-app.use("/api/v1/task",taskRouter);
+// Using routes
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/task", taskRouter);
 
+app.get("/", (req, res) => {
+  res.send("Nice working");
+});
 
-
-app.get("/",(req,res)=>{
-    res.send("Nice working")
-})
-
-
-
-
+// Using Error Middleware
+app.use(errorMiddleware);
